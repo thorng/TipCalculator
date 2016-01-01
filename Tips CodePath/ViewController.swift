@@ -22,6 +22,23 @@ class ViewController: UIViewController {
         tipLabel.text = "$0.00"
         totalLabel.text = "$0.00"
         
+        self.title = "Tip Calculator"
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let tipValue = defaults.doubleForKey("default_tip_percentage")
+        
+        if tipValue == 0.18 {
+            tipControl.selectedSegmentIndex = 0
+        } else if tipValue == 0.2 {
+            tipControl.selectedSegmentIndex = 1
+        } else {
+            tipControl.selectedSegmentIndex = 2
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,9 +49,9 @@ class ViewController: UIViewController {
     @IBAction func onEditingChanged(sender: AnyObject) {
         
         var tipPercentages = [0.18, 0.2, 0.22]
-        var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
+        let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
-        var billAmount = Double(billField.text!)
+        let billAmount = Double(billField.text!)
         var tip = billAmount! * tipPercentage
         var total = billAmount! + tip
         
